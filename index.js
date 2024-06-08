@@ -5,16 +5,19 @@ const port = process.env.PORT || 7000;
 
 const categories = require('./data/categories.json');
 const news = require('./data/news.json');
-var corsOptions = {
-    origin: "https://mini-news-server-2wsq5cw5w-md-rashedul-islam-mamuns-projects.vercel.app"
-  };
-app.use(cors(corsOptions));
+// https://dragon-news-d191d.web.app
+app.use(cors({
+    origin: 'https://dragon-news-d191d.web.app',
+    credentials: true
+}));
 
 app.get('/', (req, res) => {
+  
     res.send('Dragon is running')
 });
 
 app.get('/categories', (req, res) => {
+   
     res.send(categories);
 })
 
@@ -23,6 +26,7 @@ app.get('/news', (req, res) => {
 })
 
 app.get('/news/:id', (req, res) => {
+   
     const id = req.params.id;
     const selectedNews = news.find(n => n._id === id);
     res.send(selectedNews)
@@ -37,6 +41,7 @@ app.get('/categories/:id', (req, res) => {
         const categoryNews = news.filter(n => parseInt(n.category_id) === id);
         res.send(categoryNews)
     }
+    
 
 })
 
@@ -45,3 +50,5 @@ app.get('/categories/:id', (req, res) => {
 app.listen(port, () => {
     console.log(`Dragon API is running on port: ${port}`)
 })
+
+
